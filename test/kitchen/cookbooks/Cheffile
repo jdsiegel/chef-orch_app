@@ -1,0 +1,1 @@
+cookbook 'ruby_build', :git => 'https://github.com/fnichol/chef-ruby_build.git'
