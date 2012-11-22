@@ -1,7 +1,17 @@
 module OrchApp
   def configure_ruby(app)
+    user = app.fetch('user')
+    version = app.fetch('ruby_version')
+
     include_recipe "ruby_build"
-    ruby_build_ruby app.fetch('ruby_version')
+    ruby_build_ruby version
+
+    file "/home/#{user}/.ruby-version" do
+      owner user
+      group user
+      mode "0644"
+      content version
+    end
   end
 
   def install_chruby
