@@ -14,7 +14,7 @@ module OrchApp
     end
   end
 
-  def install_chruby
+  def configure_chruby
     version = node['orch_app']['chruby']['version']
     url = node['orch_app']['chruby'].fetch('url') do
       "https://github.com/downloads/postmodern/chruby/chruby-#{version}.tar.gz"
@@ -48,6 +48,15 @@ module OrchApp
 
     cookbook_file "/etc/profile.d/chruby.sh" do
       source "chruby.sh"
+      mode   "0644"
+      owner  "root"
+      group  "root"
+    end
+  end
+
+  def configure_env
+    cookbook_file "/etc/profile.d/app_env.sh" do
+      source "app_env.sh"
       mode   "0644"
       owner  "root"
       group  "root"

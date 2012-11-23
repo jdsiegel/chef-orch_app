@@ -1,6 +1,7 @@
 extend OrchApp
 
-install_chruby
+configure_chruby
+configure_env
 
 node['orch_app']['apps'].each do |app|
   configure_ruby(app)
