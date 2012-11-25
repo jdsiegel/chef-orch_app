@@ -62,4 +62,31 @@ module OrchApp
       group  "root"
     end
   end
+
+  def configure_runit(app)
+    include_recipe "ruby_build"
+
+    user         = app.fetch('user')
+    service_path = app.fetch('service_path') { "/home/#{user}/service" }
+    log_path     = app.fetch('log_path') { "/var/log/runsvdir-#{user}" }
+
+    directory service_path do
+      owner       user
+      group       user
+      mode        "2755"
+      recursive   true
+    end
+
+    directory log_path do
+      owner       "root"
+      group       "root"
+      mode        "755"
+      recursive   true
+    end
+
+    runit_service "runsvdir-#{user}" do
+      template_name  "user"
+      options        :user => user, :service_path => service_path, :log_path => log_path
+    end
+  end
 end
