@@ -1,24 +1,4 @@
 module OrchApp
-  def configure_ruby(app)
-    user = app.fetch('user')
-    version = app.fetch('ruby_version')
-
-    include_recipe "ruby_build"
-    ruby_build_ruby version
-
-    gem_package "bundler" do
-      version "1.2.2"
-      gem_binary "/usr/local/ruby/#{version}/bin/gem"
-    end
-
-    file "/home/#{user}/.ruby-version" do
-      owner user
-      group user
-      mode "0644"
-      content version
-    end
-  end
-
   def configure_chruby
     version = node['orch_app']['chruby']['version']
     url = node['orch_app']['chruby'].fetch('url') do
@@ -56,6 +36,26 @@ module OrchApp
       mode   "0644"
       owner  "root"
       group  "root"
+    end
+  end
+
+  def configure_ruby(app)
+    user = app.fetch('user')
+    version = app.fetch('ruby_version')
+
+    include_recipe "ruby_build"
+    ruby_build_ruby version
+
+    gem_package "bundler" do
+      version "1.2.2"
+      gem_binary "/usr/local/ruby/#{version}/bin/gem"
+    end
+
+    file "/home/#{user}/.ruby-version" do
+      owner user
+      group user
+      mode "0644"
+      content version
     end
   end
 
