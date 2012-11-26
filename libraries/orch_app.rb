@@ -138,4 +138,13 @@ module OrchApp
       group   user
       mode    "0644"
     end
+
+    template "/usr/local/bin/build_app" do
+      source "build_apps.sh.erb"
+      owner  "root"
+      group  "root"
+      mode   "0755"
+      variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir'])
+    end
+  end
 end
