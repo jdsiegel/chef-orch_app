@@ -6,6 +6,11 @@ module OrchApp
     include_recipe "ruby_build"
     ruby_build_ruby version
 
+    gem_package "bundler" do
+      version "1.2.2"
+      gem_binary "/usr/local/ruby/#{version}/bin/gem"
+    end
+
     file "/home/#{user}/.ruby-version" do
       owner user
       group user
