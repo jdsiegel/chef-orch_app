@@ -68,9 +68,17 @@ module OrchApp
 
     user         = app.fetch('user')
     service_path = app.fetch('service_path') { "/home/#{user}/service" }
-    log_path     = app.fetch('log_path') { "/var/log/runsvdir-#{user}" }
+    sv_path      = app.fetch('sv_path')      { "/home/#{user}/sv" }
+    log_path     = app.fetch('log_path')     { "/var/log/runsvdir-#{user}" }
 
     directory service_path do
+      owner       user
+      group       user
+      mode        "2755"
+      recursive   true
+    end
+
+    directory sv_path do
       owner       user
       group       user
       mode        "2755"
