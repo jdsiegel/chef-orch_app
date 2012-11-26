@@ -97,4 +97,45 @@ module OrchApp
       options        :user => user, :service_path => service_path, :log_path => log_path
     end
   end
+
+  def configure_foreman(app)
+    user = app.fetch('user')
+    home = "/home/#{user}"
+
+    gem_package "foreman"
+
+    directory "#{home}/.foreman" do
+      owner       user
+      group       user
+      mode        "2755"
+      recursive   true
+    end
+
+    directory "#{home}/.foreman/templates" do
+      owner       user
+      group       user
+      mode        "2755"
+      recursive   true
+    end
+
+    directory "#{home}/.foreman/templates/log" do
+      owner       user
+      group       user
+      mode        "2755"
+      recursive   true
+    end
+
+    cookbook_file "#{home}/.foreman/templates/run.erb" do
+      source  "foreman/run.erb"
+      owner   user
+      group   user
+      mode    "0644"
+    end
+
+    cookbook_file "#{home}/.foreman/templates/log/run.erb" do
+      source  "foreman/log.erb"
+      owner   user
+      group   user
+      mode    "0644"
+    end
 end
