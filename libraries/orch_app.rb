@@ -140,7 +140,7 @@ module OrchApp
     end
 
     template "/usr/local/bin/build_app" do
-      source "build_apps.sh.erb"
+      source "build_app.sh.erb"
       owner  "root"
       group  "root"
       mode   "0755"
