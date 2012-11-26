@@ -64,7 +64,7 @@ module OrchApp
   end
 
   def configure_runit(app)
-    include_recipe "ruby_build"
+    include_recipe "runit"
 
     user         = app.fetch('user')
     service_path = app.fetch('service_path') { "/home/#{user}/service" }
