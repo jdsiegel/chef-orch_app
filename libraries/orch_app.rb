@@ -67,9 +67,11 @@ module OrchApp
     include_recipe "runit"
 
     user         = app.fetch('user')
-    service_path = app.fetch('service_path') { "/home/#{user}/service" }
-    sv_path      = app.fetch('sv_path')      { "/home/#{user}/sv" }
-    log_path     = app.fetch('log_path')     { "/var/log/runsvdir-#{user}" }
+    runit        = app.fetch('runit')          { {} }
+
+    service_path = runit.fetch('service_path') { "/home/#{user}/service" }
+    sv_path      = runit.fetch('sv_path')      { "/home/#{user}/sv" }
+    log_path     = runit.fetch('log_path')     { "/var/log/runsvdir-#{user}" }
 
     directory service_path do
       owner       user
