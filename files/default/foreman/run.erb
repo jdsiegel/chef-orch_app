@@ -1,5 +1,5 @@
 #!/bin/bash
 . /etc/profile.d/chruby.sh
 . /etc/profile.d/app_env.sh
-cd /home/<%= user %>
+cd /home/<%= user %>/app/current
 exec <%= process.command %>

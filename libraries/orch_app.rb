@@ -74,8 +74,8 @@ module OrchApp
     user         = app.fetch('user')
     runit        = app.fetch('runit')          { {} }
 
-    service_path = runit.fetch('service_path') { "/home/#{user}/service" }
-    sv_path      = runit.fetch('sv_path')      { "/home/#{user}/sv" }
+    service_path = runit.fetch('service_path') { "/home/#{user}/services-enabled" }
+    sv_path      = runit.fetch('sv_path')      { "/home/#{user}/services-available" }
     log_path     = runit.fetch('log_path')     { "/var/log/runsvdir-#{user}" }
 
     directory service_path do
@@ -152,6 +152,31 @@ module OrchApp
       group  "root"
       mode   "0755"
       variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir'])
+    end
+  end
+
+  def configure_app_path(app)
+    user = app.fetch('user')
+    name = app.fetch('name')
+    home = "/home/#{user}"
+
+    directories = %W(
+      #{home}/app
+      #{home}/app/shared
+      #{home}/app/shared/logs
+    )
+
+    directories.each do |dir|
+      directory dir do
+        owner       user
+        group       user
+        mode        "2755"
+        recursive   true
+      end
+    end
+
+    link "#{home}/#{name}" do
+      to "#{home}/app"
     end
   end
 end

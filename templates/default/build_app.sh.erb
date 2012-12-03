@@ -4,4 +4,4 @@ set -e
 . /usr/local/share/chruby/chruby.sh
 
 chruby_use <%= @ruby_path %>
-foreman export -u $USER -t $HOME/.foreman/templates -l /tmp/apps runit $HOME/sv
+foreman export -u $USER -t $HOME/.foreman/templates -l $HOME/app/shared/logs runit $HOME/services-available

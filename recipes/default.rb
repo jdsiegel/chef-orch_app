@@ -7,4 +7,5 @@ node['orch_app']['apps'].each do |app|
   configure_ruby(app)
   configure_runit(app)
   configure_foreman(app)
+  configure_app_path(app)
 end
