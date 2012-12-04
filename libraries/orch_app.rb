@@ -163,7 +163,7 @@ module OrchApp
     directories = %W(
       #{home}/app
       #{home}/app/shared
-      #{home}/app/shared/logs
+      #{home}/app/shared/log
     )
 
     directories.each do |dir|
