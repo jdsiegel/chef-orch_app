@@ -112,25 +112,19 @@ module OrchApp
 
     gem_package "foreman"
 
-    directory "#{home}/.foreman" do
-      owner       user
-      group       user
-      mode        "2755"
-      recursive   true
-    end
+    directories = %W(
+      #{home}/.foreman
+      #{home}/.foreman/templates
+      #{home}/.foreman/templates/log
+    )
 
-    directory "#{home}/.foreman/templates" do
-      owner       user
-      group       user
-      mode        "2755"
-      recursive   true
-    end
-
-    directory "#{home}/.foreman/templates/log" do
-      owner       user
-      group       user
-      mode        "2755"
-      recursive   true
+    directories.each do |dir|
+      directory dir do
+        owner      user
+        group      user
+        mode       "2755"
+        recursive  true
+      end
     end
 
     cookbook_file "#{home}/.foreman/templates/run.erb" do
