@@ -40,14 +40,15 @@ module OrchApp
   end
 
   def configure_ruby(app)
-    user = app.fetch('user')
-    version = app.fetch('ruby_version')
+    user            = app.fetch('user')
+    version         = app.fetch('ruby_version')
+    bundler_version = app.fetch('bundler_version') { node['orch_app']['bundler']['version'] }
 
     include_recipe "ruby_build"
     ruby_build_ruby version
 
     gem_package "bundler" do
-      version "1.2.2"
+      version    bundler_version
       gem_binary "/usr/local/ruby/#{version}/bin/gem"
     end
 
