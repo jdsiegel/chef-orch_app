@@ -141,7 +141,13 @@ module OrchApp
       mode    "0644"
     end
 
-    template "/usr/local/bin/build_app" do
+    directory "#{home}/bin" do
+      owner      user
+      group      user
+      mode       "755"
+    end
+
+    template "#{home}/bin/build_app" do
       source "build_app.sh.erb"
       owner  "root"
       group  "root"
