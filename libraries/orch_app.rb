@@ -1,21 +1,21 @@
 module OrchApp
   def configure_chruby
-    version = node['orch_app']['chruby']['version']
-    url = node['orch_app']['chruby'].fetch('url') do
-      "https://github.com/downloads/postmodern/chruby/chruby-#{version}.tar.gz"
-    end
-    checksum = node['orch_app']['chruby']['checksum']
+    version       = node['orch_app']['chruby']['version']
+    url           = node['orch_app']['chruby'].fetch('url') do
+                      "https://github.com/downloads/postmodern/chruby/chruby-#{version}.tar.gz"
+                    end
+    checksum      = node['orch_app']['chruby']['checksum']
     force_install = node['orch_app']['chruby']['force_install']
 
     cache_path = Chef::Config['file_cache_path'] || '/tmp'
-    dir_name = "chruby-#{version}"
-    tar_file = "#{dir_name}.tar.gz"
-    full_path = "#{cache_path}/#{tar_file}"
+    dir_name   = "chruby-#{version}"
+    tar_file   = "#{dir_name}.tar.gz"
+    full_path  = "#{cache_path}/#{tar_file}"
 
     remote_file full_path do
-      source url
+      source   url
       checksum checksum
-      backup false
+      backup   false
     end
 
     bash "install_chruby" do
@@ -53,9 +53,9 @@ module OrchApp
     end
 
     file "/home/#{user}/.ruby-version" do
-      owner user
-      group user
-      mode "0644"
+      owner   user
+      group   user
+      mode    "0644"
       content version
     end
   end
@@ -80,29 +80,29 @@ module OrchApp
     log_path     = runit.fetch('log_path')     { "/var/log/runsvdir-#{user}" }
 
     directory service_path do
-      owner       user
-      group       user
-      mode        "2755"
-      recursive   true
+      owner     user
+      group     user
+      mode      "2755"
+      recursive true
     end
 
     directory sv_path do
-      owner       user
-      group       user
-      mode        "2755"
-      recursive   true
+      owner     user
+      group     user
+      mode      "2755"
+      recursive true
     end
 
     directory log_path do
-      owner       "root"
-      group       "root"
-      mode        "755"
-      recursive   true
+      owner     "root"
+      group     "root"
+      mode      "755"
+      recursive true
     end
 
     runit_service "runsvdir-#{user}" do
-      template_name  "user"
-      options        :user => user, :service_path => service_path, :log_path => log_path
+      template_name "user"
+      options       :user => user, :service_path => service_path, :log_path => log_path
     end
   end
 
@@ -120,38 +120,38 @@ module OrchApp
 
     directories.each do |dir|
       directory dir do
-        owner      user
-        group      user
-        mode       "2755"
-        recursive  true
+        owner     user
+        group     user
+        mode      "2755"
+        recursive true
       end
     end
 
     cookbook_file "#{home}/.foreman/templates/run.erb" do
-      source  "foreman/run.erb"
-      owner   user
-      group   user
-      mode    "0644"
+      source "foreman/run.erb"
+      owner  user
+      group  user
+      mode   "0644"
     end
 
     cookbook_file "#{home}/.foreman/templates/log/run.erb" do
-      source  "foreman/log.erb"
-      owner   user
-      group   user
-      mode    "0644"
+      source "foreman/log.erb"
+      owner  user
+      group  user
+      mode   "0644"
     end
 
     directory "#{home}/bin" do
-      owner      user
-      group      user
-      mode       "755"
+      owner user
+      group user
+      mode  "755"
     end
 
     template "#{home}/bin/app-services" do
-      source "app-services.sh.erb"
-      owner  "root"
-      group  "root"
-      mode   "0755"
+      source    "app-services.sh.erb"
+      owner     "root"
+      group     "root"
+      mode      "0755"
       variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir'])
     end
   end
@@ -169,10 +169,10 @@ module OrchApp
 
     directories.each do |dir|
       directory dir do
-        owner       user
-        group       user
-        mode        "2755"
-        recursive   true
+        owner     user
+        group     user
+        mode      "2755"
+        recursive true
       end
     end
 
