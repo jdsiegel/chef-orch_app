@@ -147,12 +147,18 @@ module OrchApp
       mode  "755"
     end
 
+    processes = app.fetch('processes') { [] }
+    processes = [['all', 0]] if !processes || processes.empty?
+
     template "#{home}/bin/app-services" do
       source    "app-services.sh.erb"
       owner     "root"
       group     "root"
       mode      "0755"
-      variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir'])
+      variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir']),
+                :user      => user,
+                :home      => home,
+                :processes => processes.map { |name,count| "#{name}=#{count}" }.join(",")
     end
   end
 

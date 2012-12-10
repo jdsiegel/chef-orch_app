@@ -8,5 +8,5 @@ chruby_use <%= @ruby_path %>
 cd $HOME/app/current
 
 if [[ -f Procfile ]]; then
-  foreman export -u $USER -t $HOME/.foreman/templates -l $HOME/app/shared/log runit $HOME/services-available
+  foreman export -u <%= @user %> -c <%= @processes %> -t <%= @home %>/.foreman/templates -l <%= @home %>/app/shared/log runit <%= @home %>/services-available
 fi
