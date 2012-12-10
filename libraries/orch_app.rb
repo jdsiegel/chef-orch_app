@@ -152,8 +152,8 @@ module OrchApp
 
     template "#{home}/bin/app-services" do
       source    "app-services.sh.erb"
-      owner     "root"
-      group     "root"
+      owner     user
+      group     user
       mode      "0755"
       variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir']),
                 :user      => user,
