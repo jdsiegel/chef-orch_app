@@ -147,8 +147,8 @@ module OrchApp
       mode       "755"
     end
 
-    template "#{home}/bin/build_app" do
-      source "build_app.sh.erb"
+    template "#{home}/bin/app-services" do
+      source "app-services.sh.erb"
       owner  "root"
       group  "root"
       mode   "0755"
