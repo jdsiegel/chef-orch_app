@@ -8,5 +8,17 @@ chruby_use <%= @ruby_path %>
 cd $HOME/app/current
 
 if [[ -f Procfile ]]; then
+  for service in `find <%= @home %>/services-enabled -maxdepth 1 -mindepth 1 -type l`; do
+    sv stop "$service"
+    rm -f "$service"
+  done
+
+  rm -rf <%= @home %>/services-available/*
+
   foreman export -u <%= @user %> -c <%= @processes %> -t <%= @home %>/.foreman/templates -l <%= @home %>/app/shared/log runit <%= @home %>/services-available
+
+  for service in `find <%= @home %>/services-available -maxdepth 1 -mindepth 1 -type d`; do
+    link="<%= @home %>/services-enabled/$(basename $service)"
+    ln -s "$service" "$link"
+  done
 fi
