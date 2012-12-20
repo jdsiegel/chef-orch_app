@@ -2,14 +2,14 @@ module OrchApp
   def configure_chruby
     version       = node['orch_app']['chruby']['version']
     url           = node['orch_app']['chruby'].fetch('url') do
-                      "https://github.com/downloads/postmodern/chruby/chruby-#{version}.tar.gz"
+                      "https://github.com/postmodern/chruby/archive/v#{version}.tar.gz"
                     end
     checksum      = node['orch_app']['chruby']['checksum']
     force_install = node['orch_app']['chruby']['force_install']
 
     cache_path = Chef::Config['file_cache_path'] || '/tmp'
     dir_name   = "chruby-#{version}"
-    tar_file   = "#{dir_name}.tar.gz"
+    tar_file   = "v#{version}.tar.gz"
     full_path  = "#{cache_path}/#{tar_file}"
 
     remote_file full_path do
