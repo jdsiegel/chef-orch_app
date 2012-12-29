@@ -1,0 +1,19 @@
+---
+default_driver: vagrant
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    box: opscode-ubuntu-12.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04.box
+  run_list:
+  - recipe[apt]
+suites:
+- name: standard
+  run_list:
+  - recipe[platform_packages]
+  - recipe[test_setup]
+  - recipe[orch_app]
+  attributes:
+    platform_packages:
+      pkgs:
+        - name: curl
