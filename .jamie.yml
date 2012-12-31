@@ -17,3 +17,12 @@ suites:
     platform_packages:
       pkgs:
         - name: curl
+    orch_app:
+      apps:
+        - name: app1
+          user: vagrant
+          ruby_version: 1.9.3-p327
+          processes:
+          -
+            - all
+            - 1
