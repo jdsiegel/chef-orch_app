@@ -43,13 +43,16 @@ module OrchApp
     user            = app.fetch('user')
     version         = app.fetch('ruby_version')
     bundler_version = app.fetch('bundler_version') { node['orch_app']['bundler']['version'] }
+    install_path    = "#{node['orch_app']['rubies_path']}/#{version}"
 
     include_recipe "ruby_build"
-    ruby_build_ruby version
+    ruby_build_ruby version do
+      prefix_path install_path
+    end
 
     gem_package "bundler" do
       version    bundler_version
-      gem_binary "/usr/local/ruby/#{version}/bin/gem"
+      gem_binary "#{install_path}/bin/gem"
     end
 
     file "/home/#{user}/.ruby-version" do
