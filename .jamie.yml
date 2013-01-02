@@ -11,8 +11,8 @@ suites:
 - name: standard
   run_list:
   - recipe[platform_packages]
-  - recipe[test_setup]
   - recipe[orch_app]
+  - recipe[dummy_app]
   attributes:
     platform_packages:
       pkgs:

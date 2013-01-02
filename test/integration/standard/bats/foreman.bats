@@ -19,3 +19,12 @@ bin_path="/home/$user/bin"
 @test "app-services script exists" {
   [ -x "$bin_path/app-services" ]
 }
+
+@test "app-services generates runit services from Procfile" {
+  run su vagrant -lc "app-services"
+  sleep 5
+  pgrep -u $user -f "ruby server.rb"
+  run curl -s http://localhost:8000
+  [ "$status" -eq 0 ]
+  [ "${lines[0]}" = "dummy app is running" ]
+}
