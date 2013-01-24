@@ -1,5 +1,6 @@
 ---
-default_driver: vagrant
+driver_plugin: vagrant
+
 platforms:
 - name: ubuntu-12.04
   driver_config:
@@ -7,6 +8,7 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04.box
   run_list:
   - recipe[apt]
+
 suites:
 - name: standard
   run_list:
