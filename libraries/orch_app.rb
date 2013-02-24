@@ -189,4 +189,22 @@ module OrchApp
       to "#{home}/app"
     end
   end
+
+  def configure_app_env(app)
+    home = home_for(app)
+    env = app.fetch('environment') { [] }
+
+    template "#{home}/.env" do
+      source "env.erb"
+      owner  user
+      group  user
+      mode   "0644"
+      variables :environment => env
+    end
+  end
+
+  def home_for(app)
+    user = app.fetch('user')
+    "/home/#{user}"
+  end
 end

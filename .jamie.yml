@@ -28,3 +28,7 @@ suites:
           -
             - all
             - 1
+          environment:
+          -
+            - RAILS_ENV
+            - production
