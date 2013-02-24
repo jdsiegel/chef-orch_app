@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-if [[ -e $HOME/app/current ]]; then
-  cd $HOME/app/current
+if [[ -e <%= @home %>/app/current ]]; then
+  cd <%= @home %>/app/current
 
   . /usr/local/share/chruby/chruby.sh
   chruby_use <%= @ruby_path %>
