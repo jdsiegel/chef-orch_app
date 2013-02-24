@@ -164,6 +164,14 @@ module OrchApp
                 :user      => user,
                 :home      => home,
                 :processes => processes.map { |name,count| "#{name}=#{count}" }.join(",")
+
+      notifies :run, "execute[app-services]"
+    end
+
+    execute "app-services" do
+      command "#{home}/bin/app-services"
+      user    user
+      action  :nothing
     end
   end
 
@@ -202,6 +210,8 @@ module OrchApp
       group  user
       mode   "0644"
       variables :environment => env
+
+      notifies :run, "execute[app-services]"
     end
   end
 
