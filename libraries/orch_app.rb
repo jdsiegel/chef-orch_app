@@ -41,6 +41,7 @@ module OrchApp
 
   def configure_ruby(app)
     user            = app.fetch('user')
+    home            = home_for(app)
     version         = app.fetch('ruby_version')
     bundler_version = app.fetch('bundler_version') { node['orch_app']['bundler']['version'] }
     install_path    = "#{node['orch_app']['rubies_path']}/#{version}"
@@ -55,7 +56,7 @@ module OrchApp
       gem_binary "#{install_path}/bin/gem"
     end
 
-    file "/home/#{user}/.ruby-version" do
+    file "#{home}/.ruby-version" do
       owner   user
       group   user
       mode    "0644"
@@ -76,10 +77,11 @@ module OrchApp
     include_recipe "runit"
 
     user         = app.fetch('user')
+    home         = home_for(app)
     runit        = app.fetch('runit')          { {} }
 
-    service_path = runit.fetch('service_path') { "/home/#{user}/services-enabled" }
-    sv_path      = runit.fetch('sv_path')      { "/home/#{user}/services-available" }
+    service_path = runit.fetch('service_path') { "#{home}/services-enabled" }
+    sv_path      = runit.fetch('sv_path')      { "#{home}/services-available" }
     log_path     = runit.fetch('log_path')     { "/var/log/runsvdir-#{user}" }
 
     directory service_path do
@@ -111,7 +113,7 @@ module OrchApp
 
   def configure_foreman(app)
     user = app.fetch('user')
-    home = "/home/#{user}"
+    home = home_for(app)
 
     gem_package "foreman"
 
@@ -168,7 +170,7 @@ module OrchApp
   def configure_app_path(app)
     user = app.fetch('user')
     name = app.fetch('name')
-    home = "/home/#{user}"
+    home = home_for(app)
 
     directories = %W(
       #{home}/app
