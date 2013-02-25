@@ -1,6 +1,6 @@
 require 'webrick'
 
-server = WEBrick::HTTPServer.new :Port => 8000, :DocumentRoot => '~/app/current/public'
+server = WEBrick::HTTPServer.new :Port => ENV['PORT'], :DocumentRoot => '~/app/current/public'
 
 trap 'INT' do 
   server.shutdown 

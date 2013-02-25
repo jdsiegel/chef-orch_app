@@ -61,6 +61,8 @@ host. Each hash accepts the following:
 * user          - the app's user account
 * ruby\_version - the app's ruby version. It is compiled by
   ruby\_build
+* port          - the starting port number, set as the PORT env
+  variable for your foreman processes. Defaults to 5000
 * bundler\_version (optional) - A version of bundler specific to this
   app
 

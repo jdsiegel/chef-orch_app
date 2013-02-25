@@ -113,6 +113,7 @@ module OrchApp
 
   def configure_foreman(app)
     user = app.fetch('user')
+    port = app.fetch('port') { 5000 }
     home = home_for(app)
 
     gem_package "foreman"
@@ -137,6 +138,8 @@ module OrchApp
       owner  user
       group  user
       mode   "0644"
+
+      notifies :run, "execute[app-services]"
     end
 
     cookbook_file "#{home}/.foreman/templates/log/run.erb" do
@@ -144,6 +147,8 @@ module OrchApp
       owner  user
       group  user
       mode   "0644"
+
+      notifies :run, "execute[app-services]"
     end
 
     directory "#{home}/bin" do
@@ -163,6 +168,7 @@ module OrchApp
       variables :ruby_path => ::File.dirname(RbConfig::CONFIG['bindir']),
                 :user      => user,
                 :home      => home,
+                :port      => port,
                 :processes => processes.map { |name,count| "#{name}=#{count}" }.join(",")
 
       notifies :run, "execute[app-services]"

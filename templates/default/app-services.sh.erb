@@ -15,7 +15,7 @@ if [[ -e <%= @home %>/app/current ]]; then
 
     rm -rf <%= @home %>/services-available/*
 
-    foreman export -u <%= @user %> -c <%= @processes %> -t <%= @home %>/.foreman/templates -l <%= @home %>/app/shared/log runit <%= @home %>/services-available
+    foreman export -u <%= @user %> -c <%= @processes %> -p <%= @port %> -t <%= @home %>/.foreman/templates -l <%= @home %>/app/shared/log runit <%= @home %>/services-available
 
     for service in `find <%= @home %>/services-available -maxdepth 1 -mindepth 1 -type d`; do
       link="<%= @home %>/services-enabled/$(basename $service)"

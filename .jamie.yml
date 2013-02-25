@@ -23,6 +23,7 @@ suites:
       apps:
         - name: app1
           user: vagrant
+          port: 8000
           ruby_version: 1.9.3-p327
           processes:
           -

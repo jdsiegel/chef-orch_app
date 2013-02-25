@@ -2,4 +2,4 @@
 . /etc/profile.d/chruby.sh
 . /etc/profile.d/app_env.sh
 cd /home/<%= user %>/app/current
-exec <%= process.command %>
+exec chpst -e <%= File.join(location, "#{process_directory}/env") %> <%= process.command %>
