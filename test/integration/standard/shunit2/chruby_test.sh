@@ -2,7 +2,7 @@
 
 user="vagrant"
 version="1.9.3"
-patchlevel="p327"
+patchlevel="p392"
 
 test_chruby_installed_and_sourced_for_user()
 {
