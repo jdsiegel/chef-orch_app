@@ -106,7 +106,8 @@ module OrchApp
     end
 
     runit_service "runsvdir-#{user}" do
-      template_name "user"
+      run_template_name "user"
+      log_template_name "user"
       options       :user => user, :service_path => service_path, :log_path => log_path
     end
   end
