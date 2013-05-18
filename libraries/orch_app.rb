@@ -117,9 +117,7 @@ module OrchApp
     port = app.fetch('port') { 5000 }
     home = home_for(app)
 
-    gem_package "foreman" do
-      gem_binary "#{RbConfig::CONFIG['bindir']}/gem"
-    end
+    chef_gem "foreman"
 
     directories = %W(
       #{home}/.foreman
