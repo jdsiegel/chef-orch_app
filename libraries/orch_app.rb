@@ -1,35 +1,6 @@
 module OrchApp
   def configure_chruby
-    version       = node['orch_app']['chruby']['version']
-    url           = node['orch_app']['chruby'].fetch('url') do
-                      "https://github.com/postmodern/chruby/archive/v#{version}.tar.gz"
-                    end
-    checksum      = node['orch_app']['chruby']['checksum']
-    force_install = node['orch_app']['chruby']['force_install']
-
-    cache_path = Chef::Config['file_cache_path'] || '/tmp'
-    dir_name   = "chruby-#{version}"
-    tar_file   = "v#{version}.tar.gz"
-    full_path  = "#{cache_path}/#{tar_file}"
-
-    remote_file full_path do
-      source   url
-      checksum checksum
-      backup   false
-    end
-
-    bash "install_chruby" do
-      cwd cache_path
-      code <<-EOH
-        tar xzf #{tar_file}
-        cd #{dir_name}
-        make install
-      EOH
-
-      not_if do
-        ::File.exists?("/usr/local/share/chruby/chruby.sh") && !force_install
-      end
-    end
+    include_recipe "chruby"
 
     cookbook_file "/etc/profile.d/chruby.sh" do
       source "chruby.sh"
